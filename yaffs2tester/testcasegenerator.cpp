@@ -13,7 +13,8 @@
 #include <numeric>
 #include <map>
 #include <utility>
-
+#include <time.h>
+#include <stdlib.h>     /* srand, rand */
 extern "C" {
 #include "yaffsfs.h"
 }
@@ -892,7 +893,7 @@ void gen_tester(FILE* fp, int length, const char* strategy, const char* format) 
                         if( path.length() > 0) {
                             struct yaffs_stat stbuf;
                             int res = yaffs_stat(path.c_str(), &stbuf);
-                            if( res  != -1 || goahead()) {
+                           if( res  != -1 || goahead()) {
                                 call.api_id = STAT;
                                 call.parameters.push_back( vtype(path, vtype::ePath));
                                 testcase.add( call );
@@ -1816,10 +1817,10 @@ int main(int argc, char* argv[]) {
 
     TCLAP::CmdLine* p= new TCLAP::CmdLine("YAFFS2 test case generator", ' ', "0.99");
     TCLAP::CmdLine& cmd = *p;
-    TCLAP::ValueArg<int>    argRandseed("", "randseed", "seed for random generator", true, 0, "int");
-    TCLAP::ValueArg<int>    argStartIdx("", "startidx", "start index of test cases", true, 0, "int");
-    TCLAP::ValueArg<int>    argEndIdx("", "endidx", "end index of test cases", true, 99, "int");
-    TCLAP::ValueArg<int>    argEachSize("", "eachsize", "The number of test cases in each *.c file", true, 1, "int");
+    TCLAP::ValueArg<int>    argRandseed("", "randseed", "seed for random generator", false, 0, "int");
+    TCLAP::ValueArg<int>    argStartIdx("", "startidx", "start index of test cases", false, 0, "int");
+    TCLAP::ValueArg<int>    argEndIdx("", "endidx", "end index of test cases",  false,0 , "int");
+    TCLAP::ValueArg<int>    argEachSize("", "eachsize", "The number of test cases in each *.c file", false, 1, "int");
     TCLAP::ValueArg<std::string> argDir("", "dir", "The directory where you want want to put the generated test cases", false, "./", "std::string");
     TCLAP::ValueArg<int>    argTCLength("", "tclength", "The length of test cases", true, 100, "int");
     TCLAP::ValueArg<std::string> argStrategy("", "strategy", "Pure random, swarm, or weighted random", false, "pure", "std::string");
@@ -1853,6 +1854,7 @@ int main(int argc, char* argv[]) {
                 if( p != NULL ) {
                     if( p->getValue() == false ) {
                         apiinfo[i].benable = false;
+			//			printf("%s", )
                    }
                 }
                 break;
@@ -1865,8 +1867,9 @@ int main(int argc, char* argv[]) {
     int each_size;
     const char* dir = 0;
     int length = 0;
-    int randseed  = 0;
-    randseed = argRandseed.getValue();
+    srand(time(NULL));
+    int randseed  = rand();
+//    randseed = argRandseed.getValue();
     startidx = argStartIdx.getValue();
     endidx = argEndIdx.getValue();
     //numcases = argNumCases.getValue();
@@ -1887,9 +1890,9 @@ int main(int argc, char* argv[]) {
 #endif
 
     for(int i = startidx; i <= endidx /* yes less than or equal */; i++ ) {
-        char filename[64];
+        char filename[1024];
         sprintf(filename, "%s/ts%06d.c", dir, i);
-        FILE* fp = fopen(filename, "w+");
+        FILE* fp = stdout; //fopen(filename, "w+");
         if( fp ) {
             gen_testers(fp, 1, length, strategy, format, weightstring);
             fclose(fp);

@@ -1,0 +1,8 @@
+YAFFS2_COMPILE_OPTIONS = -DCONFIG_YAFFS_DIRECT -DCONFIG_YAFFS_YAFFS2 -DCONFIG_YAFFS_PROVIDE_DEFS \
+                            -DCONFIG_YAFFSFS_PROVIDE_VALUES \
+                            -I yaffs2/inc -I yaffs2
+TCLAP_LIB_PATH=../tools/tclap-1.2.1
+G_ROOT_FOLDER=
+all: 
+	gcc -o testcasegenerator testcasegenerator.cpp yaffs2/yaffs2.c -DENABLE_GMP -lgmp -I $(TCLAP_LIB_PATH)/include $(YAFFS2_COMPILE_OPTIONS) -lstdc++ -ldl
+
