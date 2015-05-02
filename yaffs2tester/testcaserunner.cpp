@@ -33,40 +33,41 @@ extern int yaffs_trace_mask;
 #define OUTPUT_SIZE 100000
 char output[OUTPUT_SIZE];
 int main(int argc, char* argv[]) {
-    int start, num;
+    int start = 0, num = 1;
     int gencov = 0;
     int i = 1;
     char* instype = 0;
    
-    char* testcasefile = 0;
-    yaffs_trace_mask = 0;
-    const char* covdbname = 0;
-    while( i < argc ) {
-        if( strcmp(argv[i], "-start") == 0 ) {
-            start = atoi(argv[i+1] );
-            i += 2;
-        }
-        else if( strcmp(argv[i], "-num") == 0 ) {
-            num = atoi(argv[i+1]);
-            i += 2;
-        }
-        else if( strcmp(argv[i], "-c") == 0 ) {
-            gencov = 1;
-            i += 1;
-        }
-        else if( strcmp(argv[i], "-instype") == 0 ) {
-            instype = argv[i+1];
-            i += 2;
-        }
-        else if( strcmp(argv[i], "-testcasefile") == 0) {
-            testcasefile = argv[i+1];
-            i += 2;
-        }
-        else if( strcmp(argv[i], "-covdbname") == 0) {
-            covdbname = argv[i+1];
-            i += 2;            
-        }
-    }
+    char* testcasefile = argv[1];
+
+    // yaffs_trace_mask = 0;
+    // const char* covdbname = 0;
+    // while( i < argc ) {
+    //     if( strcmp(argv[i], "-start") == 0 ) {
+    //         start = atoi(argv[i+1] );
+    //         i += 2;
+    //     }
+    //     else if( strcmp(argv[i], "-num") == 0 ) {
+    //         num = atoi(argv[i+1]);
+    //         i += 2;
+    //     }
+    //     else if( strcmp(argv[i], "-c") == 0 ) {
+    //         gencov = 1;
+    //         i += 1;
+    //     }
+    //     else if( strcmp(argv[i], "-instype") == 0 ) {
+    //         instype = argv[i+1];
+    //         i += 2;
+    //     }
+    //     else if( strcmp(argv[i], "-testcasefile") == 0) {
+    //         testcasefile = argv[i+1];
+    //         i += 2;
+    //     }
+    //     else if( strcmp(argv[i], "-covdbname") == 0) {
+    //         covdbname = argv[i+1];
+    //         i += 2;            
+    //     }
+    // }
     while(start < num) {
         memset(output, 0, OUTPUT_SIZE);
 #ifndef NO_COVERAGE

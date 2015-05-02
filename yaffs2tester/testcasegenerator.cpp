@@ -1822,7 +1822,7 @@ int main(int argc, char* argv[]) {
     TCLAP::ValueArg<int>    argEndIdx("", "endidx", "end index of test cases",  false,0 , "int");
     TCLAP::ValueArg<int>    argEachSize("", "eachsize", "The number of test cases in each *.c file", false, 1, "int");
     TCLAP::ValueArg<std::string> argDir("", "dir", "The directory where you want want to put the generated test cases", false, "./", "std::string");
-    TCLAP::ValueArg<int>    argTCLength("", "tclength", "The length of test cases", true, 100, "int");
+    TCLAP::ValueArg<int>    argTCLength("", "tclen", "The length of test cases", true, 100, "int");
     TCLAP::ValueArg<std::string> argStrategy("", "strategy", "Pure random, swarm, or weighted random", false, "pure", "std::string");
     TCLAP::ValueArg<std::string> argFormat("", "format", "concolic or txt call sequence", false, "nonconcolic", "std::string");
     TCLAP::ValueArg<std::string> argWeightString("", "weightstring", "weight string", false, "", "std::string");
@@ -1880,7 +1880,7 @@ int main(int argc, char* argv[]) {
     const char* format = argFormat.getValue().c_str();
     const char* weightstring = argWeightString.getValue().c_str();
 
-    printf("randseed = %d\n", randseed);
+    //    printf("randseed = %d\n", randseed);
 #if defined(ENABLE_GMP)
     gmp_randinit_default(state);
     gmp_randseed_ui(state, randseed);
