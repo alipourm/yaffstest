@@ -5,5 +5,5 @@ TCLAP_LIB_PATH=../tools/tclap-1.2.1
 G_ROOT_FOLDER=
 all: 
 	rm -rf *.gcda
-	gcc -o testcasegenerator testcasegenerator.cpp yaffs2/yaffs2.c -DENABLE_GMP -lgmp -I $(TCLAP_LIB_PATH)/include $(YAFFS2_COMPILE_OPTIONS) -lstdc++ -ldl
+	gcc -o testcasegenerator testcasegenerator.cpp yaffs2/yaffs2.c -I $(TCLAP_LIB_PATH)/include $(YAFFS2_COMPILE_OPTIONS) -lstdc++ -ldl
 	gcc -o yaffs2_gcov yaffs2/yaffs2.c testcaserunner.cpp  -DNO_COVERAGE $(YAFFS2_COMPILE_OPTIONS) --coverage -lstdc++ -ldl 
